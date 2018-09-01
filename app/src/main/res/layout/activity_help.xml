@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    tools:context=".HelpActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30sp"
+        android:layout_marginRight="30sp"
+        android:fontFamily="@font/miriam_libre_new"
+        android:text="@string/enter_your_mobile_number_which_is_registered_during_our_survey_help_request_can_onlybe_done_via_registered_mobile_number"
+        android:textAlignment="center"
+        android:textSize="17sp" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:layout_margin="30sp"
+        android:inputType="phone"
+        android:hint="Phone No"
+        android:backgroundTint="@color/colorAccent"
+        android:foregroundTint="@color/colorAccent"
+        android:ems="7"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:text="Generate OTP"
+        android:paddingLeft="50sp"
+        android:paddingRight="50sp"
+        android:paddingBottom="15sp"
+        android:paddingTop="15sp"
+        android:backgroundTint="@color/colorAccent"
+        android:textSize="19sp"
+        android:onClick="createModal"
+        android:fontFamily="@font/miriam_libre_new"
+        android:textColor="#ffffff"
+        android:layout_height="wrap_content" />
+</LinearLayout>
