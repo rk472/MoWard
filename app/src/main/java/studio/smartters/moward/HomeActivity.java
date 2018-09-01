@@ -20,6 +20,9 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import studio.smartters.moward.Fragments.ImageFragment;
+import studio.smartters.moward.Fragments.VideoFragment;
+
 public class HomeActivity extends AppCompatActivity {
 
 
@@ -86,7 +89,16 @@ public class HomeActivity extends AppCompatActivity {
         }
         @Override
         public Fragment getItem(int position) {
-            return PlaceholderFragment.newInstance(position + 1);
+            Fragment f=null;
+            switch (position){
+                case 0:
+                    f=new ImageFragment();
+                    break;
+                case 1:
+                    f=new VideoFragment();
+                    break;
+            }
+            return f;
         }
         @Override
         public int getCount() {
