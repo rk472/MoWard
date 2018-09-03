@@ -3,7 +3,9 @@ package studio.smartters.moward.ViewHolders;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         img=itemView.findViewById(R.id.image_photo);
         nameText=itemView.findViewById(R.id.image_title);
+
         v=itemView;
     }
     public void setName(String name){
@@ -43,13 +46,15 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         ImageRequest i=new ImageRequest(url + path, new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap response) {
+                int width=img.getWidth();
+                img.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,width*2/3));
                 img.setImageBitmap(response);
             }
         },0,0,ImageView.ScaleType.CENTER_CROP, Bitmap.Config.RGB_565,new Response.ErrorListener(){
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(v.getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         r.add(i);
