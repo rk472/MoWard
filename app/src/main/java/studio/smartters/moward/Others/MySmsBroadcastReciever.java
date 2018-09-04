@@ -19,16 +19,14 @@ public class MySmsBroadcastReciever extends BroadcastReceiver
         Bundle intentExtras = intent.getExtras();
         if (intentExtras != null) {
             Object[] sms = (Object[]) intentExtras.get(SMS_BUNDLE);
-            String from = "";
-            String body = "";
             SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sms[0]);
             String smsBody = smsMessage.getMessageBody().toString();
             String address = smsMessage.getOriginatingAddress();
-            if(from.equalsIgnoreCase( "MD-JAVATC")) {
+            if(address.equals( "MD-JAVATC")) {
                 HelpActivity inst = HelpActivity.instance();
                 if (inst != null)
                     if (inst.et_otp != null)
-                        inst.et_otp.setText(body.split(":")[1]);
+                        inst.et_otp.setText(smsBody.split(":")[1]);
             }
         }
     }

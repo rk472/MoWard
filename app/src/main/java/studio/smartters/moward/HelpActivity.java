@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -105,41 +108,56 @@ public class HelpActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return "false";
+            JSONObject json=new JSONObject();
+            try {
+                json.put("status","false");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return json.toString();
         }
 
         @Override
         protected void onPostExecute(String s) {
-            Log.e("res",s);
-            if(s.equalsIgnoreCase("true")){
-                et_otp.setVisibility(View.VISIBLE);
-                tv_modal.setText("Waiting For OTP");
-                final int captcha=generateCaptchaString();
-                et_otp.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            try {
+                JSONObject json=new JSONObject(s);
+                String status=json.getString("status");
+                if(status.equalsIgnoreCase("true")){
+                    final String id=json.getString("id");
+                    et_otp.setVisibility(View.VISIBLE);
+                    tv_modal.setText("Waiting For OTP");
+                    final int captcha=generateCaptchaString();
+                    OTPTask ot=new OTPTask();
+                    ot.execute("http://sms.forcesms.info/sendSMS?username=jtbabu&message=Your onetime password for asking help in MoWard app is MW:"+captcha+"&sendername=JAVATC&smstype=TRANS&numbers="+number+"&apikey=261819f9-0181-4274-941b-c8602ef5225d");
+                    et_otp.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if(Integer.parseInt(s.toString())==1234){
-                            Intent i=new Intent(HelpActivity.this,HelpContentActivity.class);
-                            i.putExtra("number",number);
-                            startActivity(i);
-                            finish();
                         }
-                    }
 
-                    @Override
-                    public void afterTextChanged(Editable s) {
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            if(Integer.parseInt(s.toString())==captcha){
+                                Intent i=new Intent(HelpActivity.this,HelpContentActivity.class);
+                                i.putExtra("number",number);
+                                i.putExtra("id",id);
+                                startActivity(i);
+                                finish();
+                            }
+                        }
 
-                    }
-                });
+                        @Override
+                        public void afterTextChanged(Editable s) {
 
-            }else{
-                Toast.makeText(HelpActivity.this, "Cant verify number :"+s, Toast.LENGTH_SHORT).show();
-                mBottomSheetDialog.dismiss();
+                        }
+                    });
+
+                }else{
+                    Toast.makeText(HelpActivity.this, "Cant verify number :"+s, Toast.LENGTH_SHORT).show();
+                    mBottomSheetDialog.dismiss();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
             super.onPostExecute(s);
         }
@@ -148,5 +166,30 @@ public class HelpActivity extends AppCompatActivity {
         Random rnd=new Random();
         int n=100000+rnd.nextInt(900000);
         return n;
+    }
+    class OTPTask extends AsyncTask<String,Void,String>{
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                URL url=new URL(strings[0]);
+                URLConnection con=url.openConnection();
+                InputStream is=con.getInputStream();
+                return "res";
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "err";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if(s.equalsIgnoreCase("err")){
+                Toast.makeText(HelpActivity.this, "Some Error Occured..Try again later", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
