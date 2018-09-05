@@ -1,6 +1,5 @@
 package studio.smartters.moward.ViewHolders;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -26,14 +25,12 @@ public class VideoViewHolder extends RecyclerView.ViewHolder {
         nameText.setText(name);
     }
     public void setClick(final String url){
-
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GiraffePlayer.play(v.getContext(), new VideoInfo(Uri.parse(Constants.URL+"videos/"+url)));
             }
         });
-
     }
 
 }
