@@ -75,7 +75,7 @@ public class HelpActivity extends AppCompatActivity {
         mBottomSheetDialog.setContentView(dialogView);
         mBottomSheetDialog.setCanceledOnTouchOutside(false);
         mBottomSheetDialog.show();
-        vt.execute(Constants.URL+"verifyNumber");
+        vt.execute(Constants.URL+"verifyNumber?number="+number);
     }
     static HelpActivity inst;
     public static HelpActivity instance() {
@@ -110,7 +110,7 @@ public class HelpActivity extends AppCompatActivity {
             }
             JSONObject json=new JSONObject();
             try {
-                json.put("status","false");
+                json.put("status","failed");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -153,7 +153,7 @@ public class HelpActivity extends AppCompatActivity {
                     });
 
                 }else{
-                    Toast.makeText(HelpActivity.this, "Cant verify number :"+s, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HelpActivity.this, "Cant verify number :", Toast.LENGTH_SHORT).show();
                     mBottomSheetDialog.dismiss();
                 }
             } catch (JSONException e) {
