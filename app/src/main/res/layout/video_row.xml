@@ -44,7 +44,7 @@
                 android:scaleType="centerCrop" />
             <View
                 android:layout_width="match_parent"
-                android:background="#1b939393"
+                android:background="#49313131"
                 android:layout_height="match_parent"/>
             <ImageView
                 android:layout_width="100sp"
