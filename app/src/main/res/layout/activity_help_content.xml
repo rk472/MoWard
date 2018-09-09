@@ -7,26 +7,41 @@
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".HelpContentActivity">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30sp"
-        android:layout_marginRight="30sp"
+        android:textSize="26sp"
         android:fontFamily="@font/miriam_libre_new"
-        android:text="Enter the Content Here on which you want our help and necessary action will be taken if the request is fake"
-        android:textAlignment="center"
-        android:textSize="17sp" />
-    <EditText
-        android:layout_width="match_parent"
+        android:text="@string/notice" />
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:layout_margin="30sp"
-        android:hint="@string/help_context"
-        android:maxLines="4"
-        android:maxLength="400"
-        android:id="@+id/help_text"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:fontFamily="@font/miriam_libre_new"
+        android:text="@string/enter_the_content_here_on_which_you_want_our_help_and_necessary_action_will_be_taken_if_the_request_is_fake"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_marginTop="30sp"
+        app:counterEnabled="true"
+        app:counterMaxLength="400"
         android:backgroundTint="@color/colorAccent"
-        android:foregroundTint="@color/colorAccent"/>
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="wrap_content"
+            android:id="@+id/help_text"
+            android:hint="@string/help_context"
+            android:ems="15"
+            android:maxLength="400"
+            android:backgroundTint="@color/colorAccentDark"
+            android:inputType="textMultiLine"
+            android:lines="2"
+            android:maxLines="2"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
     <Button
         android:layout_width="wrap_content"
         android:text="Submit Help"
@@ -36,6 +51,7 @@
         android:paddingTop="15sp"
         android:onClick="submit"
         android:enabled="false"
+        android:layout_marginTop="20sp"
         android:id="@+id/help_button"
         android:backgroundTint="@color/colorAccent"
         android:textSize="20sp"

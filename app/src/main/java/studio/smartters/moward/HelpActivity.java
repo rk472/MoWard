@@ -1,5 +1,6 @@
 package studio.smartters.moward;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -42,6 +43,9 @@ public class HelpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         numberText=findViewById(R.id.help_no);
         otpButton=findViewById(R.id.otp_button);
         otpButton.setEnabled(false);
@@ -52,7 +56,7 @@ public class HelpActivity extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(TextUtils.isEmpty(s)){
+                if(TextUtils.isEmpty(s)|s.length()<10){
                     otpButton.setEnabled(false);
                 }else{
                     otpButton.setEnabled(true);
@@ -66,7 +70,7 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     public void createModal(View view) {
-        number=numberText.getText().toString();
+        number=numberText.getText().toString().trim();
         VerifyTask vt=new VerifyTask();
         mBottomSheetDialog = new BottomSheetDialog(HelpActivity.this);
         dialogView = HelpActivity.this.getLayoutInflater().inflate(R.layout.dialog_bottom_sheet, null);
@@ -87,8 +91,8 @@ public class HelpActivity extends AppCompatActivity {
         super.onStart();
         inst = this;
     }
+    @SuppressLint("StaticFieldLeak")
     class VerifyTask extends AsyncTask<String,Void,String>{
-
         @Override
         protected String doInBackground(String... strings) {
             try {
@@ -134,7 +138,6 @@ public class HelpActivity extends AppCompatActivity {
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
                         }
-
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
                             if(Integer.parseInt(s.toString())==captcha){
@@ -153,11 +156,11 @@ public class HelpActivity extends AppCompatActivity {
                     });
 
                 }else{
-                    Toast.makeText(HelpActivity.this, "Cant verify number :", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HelpActivity.this, "Cant verify number", Toast.LENGTH_SHORT).show();
                     mBottomSheetDialog.dismiss();
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
+                Toast.makeText(HelpActivity.this, s, Toast.LENGTH_SHORT).show();
             }
             super.onPostExecute(s);
         }
@@ -176,19 +179,16 @@ public class HelpActivity extends AppCompatActivity {
                 URLConnection con=url.openConnection();
                 InputStream is=con.getInputStream();
                 return "res";
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             } catch (IOException e) {
-                e.printStackTrace();
+                return "err";
             }
-            return "err";
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if(s.equalsIgnoreCase("err")){
-                Toast.makeText(HelpActivity.this, "Some Error Occured..Try again later", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HelpActivity.this, "Unable to reach server !", Toast.LENGTH_SHORT).show();
             }
         }
     }

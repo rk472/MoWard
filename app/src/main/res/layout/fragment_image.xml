@@ -31,12 +31,36 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="25sp"
+                        android:fontFamily="@font/miriam_libre_new"
                         android:text="No Internet"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
-                        android:text="Swipe down to refresh"/>
+                        android:fontFamily="@font/miriam_libre_new"
+                        android:text="Pull down to refresh"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/image_load"
+                    android:background="#fff"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:elevation="50dp">
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:layout_width="300sp"
+                        android:layout_height="300sp"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_fileName="loading.json"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="25sp"
+                        android:id="@+id/load_text"
+                        android:fontFamily="@font/miriam_libre_new"
+                        android:text="Please Wait Loading"/>
                 </LinearLayout>
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"

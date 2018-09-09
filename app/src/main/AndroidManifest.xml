@@ -26,12 +26,16 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-        <activity android:name=".HelpActivity" />
+        <activity android:name=".HelpActivity"
+            android:parentActivityName=".HomeActivity"
+            android:label="Verify Phone Number"/>
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".HelpContentActivity"></activity>
+        <activity android:name=".HelpContentActivity"
+            android:parentActivityName=".HelpActivity"
+            android:label="Help Details"/>
 
         <meta-data
             android:name="preloaded_fonts"

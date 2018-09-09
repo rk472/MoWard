@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Cache;
@@ -44,13 +46,18 @@ public class VideoFragment extends Fragment {
     private RecyclerView list;
     private SwipeRefreshLayout swipeRefreshLayout;
     private View v;
-    private LinearLayout ln;
+    private LinearLayout ln,ll;
+    private  boolean loaded = false;
+    private TextView tvLoad;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v=inflater.inflate(R.layout.fragment_video, container, false);
         list=v.findViewById(R.id.video_list);
         ln=v.findViewById(R.id.video_error);
+        ll=v.findViewById(R.id.video_load);
+        tvLoad = v.findViewById(R.id.load_text);
+        tvLoad.setText("Please Wait Loading");
         swipeRefreshLayout=v.findViewById(R.id.swipe_video);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -67,7 +74,20 @@ public class VideoFragment extends Fragment {
         return v;
     }
     private void refresh(){
+        loaded = false;
         if(isNetworkAvailable()) {
+            tvLoad.setText("Please Wait Loading");
+            ll.setVisibility(View.VISIBLE);
+            ln.setVisibility(View.GONE);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(!loaded){
+                        tvLoad.setText("Slow Internet Detected\nPlease Wait a Little Longer");
+                    }
+                }
+            },5000);
             JsonArrayRequest j = new JsonArrayRequest(Request.Method.POST, url, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
@@ -88,7 +108,10 @@ public class VideoFragment extends Fragment {
                     list.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                     list.setHasFixedSize(true);
                     list.setAdapter(p);
+                    list.setVisibility(View.VISIBLE);
                     ln.setVisibility(View.GONE);
+                    ll.setVisibility(View.GONE);
+                    loaded = true;
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -98,6 +121,8 @@ public class VideoFragment extends Fragment {
             });
             r.add(j);
         }else{
+            list.setVisibility(View.GONE);
+            ll.setVisibility(View.GONE);
             ln.setVisibility(View.VISIBLE);
         }
     }

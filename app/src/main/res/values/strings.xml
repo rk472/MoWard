@@ -7,8 +7,10 @@
     <string name="tab_text_1">Image</string>
     <string name="tab_text_2">Video</string>
     <string name="enter_your_mobile_number_which_is_registered_during_our_survey_help_request_can_onlybe_done_via_registered_mobile_number">Enter your Mobile Number which is registered during our survey. Help request can onlybe done via registered mobile number.</string>
-    <string name="help_context">Enter Help Context [ Max 400 letters]</string>
+    <string name="help_context">Enter Help Context</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_the_content_here_on_which_you_want_our_help_and_necessary_action_will_be_taken_if_the_request_is_fake">Enter the Content Here on which you want our help and necessary action will be taken if the request is fake</string>
+    <string name="notice">Notice</string>
 </resources>
