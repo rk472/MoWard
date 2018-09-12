@@ -1,10 +1,15 @@
 package studio.smartters.moward;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -38,14 +43,14 @@ public class HelpActivity extends AppCompatActivity {
     private View dialogView;
     public EditText et_otp;
     private TextView tv_modal;
+    private String pageName;
     private String number;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        pageName = getIntent().getExtras().getString("page");
         numberText=findViewById(R.id.help_no);
         otpButton=findViewById(R.id.otp_button);
         otpButton.setEnabled(false);
@@ -70,17 +75,35 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     public void createModal(View view) {
-        number=numberText.getText().toString().trim();
-        VerifyTask vt=new VerifyTask();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.RECEIVE_SMS},1);
+        }else {
+            verify();
+        }
+    }
+    private void verify(){
+        number = numberText.getText().toString().trim();
+        VerifyTask vt = new VerifyTask();
         mBottomSheetDialog = new BottomSheetDialog(HelpActivity.this);
         dialogView = HelpActivity.this.getLayoutInflater().inflate(R.layout.dialog_bottom_sheet, null);
         et_otp = dialogView.findViewById(R.id.otp_et);
-        tv_modal= dialogView.findViewById(R.id.modal_text);
+        tv_modal = dialogView.findViewById(R.id.modal_text);
         mBottomSheetDialog.setContentView(dialogView);
         mBottomSheetDialog.setCanceledOnTouchOutside(false);
         mBottomSheetDialog.show();
-        vt.execute(Constants.URL+"verifyNumber?number="+number);
+        vt.execute(Constants.URL + "verifyNumber?number=" + number);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==1)
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+            verify();
+            }
+    }
+
     static HelpActivity inst;
     public static HelpActivity instance() {
         return inst;
@@ -141,11 +164,19 @@ public class HelpActivity extends AppCompatActivity {
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
                             if(Integer.parseInt(s.toString())==captcha){
-                                Intent i=new Intent(HelpActivity.this,HelpContentActivity.class);
-                                i.putExtra("number",number);
-                                i.putExtra("id",id);
-                                startActivity(i);
-                                finish();
+                                if(pageName.equalsIgnoreCase("help")){
+                                    Intent i=new Intent(HelpActivity.this,HelpContentActivity.class);
+                                    i.putExtra("number",number);
+                                    i.putExtra("id",id);
+                                    startActivity(i);
+                                    finish();
+                                }else{
+                                    Intent i=new Intent(HelpActivity.this,FeedbackActivity.class);
+                                    i.putExtra("number",number);
+                                    i.putExtra("id",id);
+                                    startActivity(i);
+                                    finish();
+                                }
                             }
                         }
 

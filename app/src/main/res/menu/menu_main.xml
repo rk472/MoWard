@@ -5,7 +5,19 @@
     <item
         android:id="@+id/action_help"
         android:orderInCategory="100"
-        android:title="help"
+        android:title="Ask for help"
         android:icon="@drawable/help_vect"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_feedback"
+        android:orderInCategory="100"
+        android:title="Give Feedback"
+        android:icon="@drawable/help_vect"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_about"
+        android:orderInCategory="100"
+        android:title="About App"
+        android:icon="@drawable/help_vect"
+        app:showAsAction="never" />
 </menu>

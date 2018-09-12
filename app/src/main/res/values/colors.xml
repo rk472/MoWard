@@ -7,5 +7,6 @@
   <color name="colorAccentLight">#ffdc65</color>
   <color name="colorAccentDark">#c17b00</color>
   <color name="whiteColor">#ffffff</color>
+  <color name="greyColor">#baffdc65</color>
   <color name="blackColor">#000000</color>
 </resources>

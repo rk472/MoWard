@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".FeedbackActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="26sp"
+        android:fontFamily="@font/miriam_libre_new"
+        android:text="@string/notice" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:fontFamily="@font/miriam_libre_new"
+        android:text="@string/feed_text"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_marginTop="30sp"
+        app:counterEnabled="true"
+        app:counterMaxLength="400"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="wrap_content"
+            android:id="@+id/help_text"
+            android:hint="Share Your Thought"
+            android:ems="15"
+            android:maxLength="400"
+            android:backgroundTint="@color/colorAccentDark"
+            android:inputType="textMultiLine"
+            android:lines="2"
+            android:maxLines="2"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:text="Submit Feedback"
+        android:paddingLeft="50sp"
+        android:paddingRight="50sp"
+        android:paddingBottom="15sp"
+        android:paddingTop="15sp"
+        android:onClick="submit"
+        android:enabled="false"
+        android:layout_marginTop="20sp"
+        android:id="@+id/help_button"
+        android:backgroundTint="@color/colorAccent"
+        android:textSize="20sp"
+        android:fontFamily="@font/miriam_libre_new"
+        android:textColor="#ffffff"
+        android:layout_height="wrap_content" />
+</LinearLayout>

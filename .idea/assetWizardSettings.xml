@@ -47,7 +47,7 @@
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="f9aa33" />
-                                      <entry key="foregroundImage" value="C:\Users\ramak\Desktop\moward_logo.png" />
+                                      <entry key="foregroundImage" value="C:\Users\ramak\Desktop\mwlogo.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -61,6 +61,11 @@
                 </map>
               </option>
             </PersistentState>
+          </value>
+        </entry>
+        <entry key="vectorWizard">
+          <value>
+            <PersistentState />
           </value>
         </entry>
       </map>
