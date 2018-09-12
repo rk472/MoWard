@@ -66,7 +66,7 @@ public class FeedbackActivity extends AppCompatActivity {
         p.setCanceledOnTouchOutside(false);
         p.setCancelable(false);
         p.show();
-        ht.execute("http://205.147.101.127:8084/MoWord/submitQuery?id="+id+"&phone="+number+"&body="+body);
+        ht.execute("http://205.147.101.127:8084/MoWord/submitFeedback?id="+id+"&phone="+number+"&body="+body);
     }
     @SuppressLint("StaticFieldLeak")
     private class HelpTAsk extends AsyncTask<String,Void,String> {
